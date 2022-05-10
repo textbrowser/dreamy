@@ -28,6 +28,10 @@
 #ifndef _dreamy_options_h_
 #define _dreamy_options_h_
 
+#include <QColorDialog>
+#include <QDir>
+#include <QSettings>
+
 #include "ui_dreamy_options.h"
 
 class dreamy_options: public QDialog
@@ -41,16 +45,19 @@ class dreamy_options: public QDialog
     m_ui.background_color->setStyleSheet
       ("QPushButton {background-color: black;}");
     m_ui.background_color->setText(QColor(Qt::black).name());
-
-    auto font(QApplication::font());
-
-    if(parent)
-      font.setPointSize(qMin(parent->height(), parent->width()) / 5);
-
-    m_ui.font->setText(font.toString());
     m_ui.font_color->setStyleSheet
       ("QPushButton {background-color: #d8cb32;}");
     m_ui.font_color->setText("#d8cb32");
+    connect(m_ui.background_color,
+	    &QPushButton::clicked,
+	    this,
+	    &dreamy_options::slot_button_clicked);
+    connect(m_ui.font_color,
+	    &QPushButton::clicked,
+	    this,
+	    &dreamy_options::slot_button_clicked);
+    save_settings();
+    restore_settings();
   }
 
   QColor background_color(void) const
@@ -85,6 +92,52 @@ class dreamy_options: public QDialog
 
  private:
   Ui_dreamy_options m_ui;
+
+  QString settings_filename(void) const
+  {
+    QDir dir;
+
+    dir.mkdir(QDir::homePath() + QDir::separator() + ".dreamy");
+    return QDir::homePath() +
+      QDir::separator() +
+      ".dreamy" +
+      QDir::separator() +
+      "dreamy.ini";
+  }
+
+  void restore_settings(void)
+  {
+  }
+
+  void save_settings(void)
+  {
+    QSettings settings(settings_filename(), QSettings::IniFormat);
+
+    settings.setValue("background_color", m_ui.background_color->text());
+    settings.setValue("font_color", m_ui.font_color->text());
+    settings.setValue("show_am_pm", m_ui.show_am_pm->isChecked());
+    settings.setValue("show_seconds", m_ui.show_seconds->isChecked());
+  }
+
+ private slots:
+   void slot_button_clicked(void)
+   {
+     auto button = qobject_cast<QPushButton *> (sender());
+
+     if(!button)
+       return;
+
+     QColorDialog dialog(this);
+
+     dialog.setCurrentColor(QColor(button->text()));
+     dialog.setWindowTitle(tr("Dreamy: Select Color"));
+
+     if(dialog.exec() == QDialog::Accepted)
+       {
+	 button->setText(dialog.selectedColor().name());
+	 save_settings();
+       }
+   }
 };
 
 #endif
