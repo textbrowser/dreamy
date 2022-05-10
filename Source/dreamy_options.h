@@ -30,6 +30,7 @@
 
 #include <QColorDialog>
 #include <QDir>
+#include <QFontDialog>
 #include <QSettings>
 
 #include "ui_dreamy_options.h"
@@ -58,11 +59,15 @@ class dreamy_options: public QDialog
     connect(m_ui.background_color,
 	    &QPushButton::clicked,
 	    this,
-	    &dreamy_options::slot_button_clicked);
+	    &dreamy_options::slot_color_button_clicked);
+    connect(m_ui.font,
+	    &QPushButton::clicked,
+	    this,
+	    &dreamy_options::slot_font_button_clicked);
     connect(m_ui.font_color,
 	    &QPushButton::clicked,
 	    this,
-	    &dreamy_options::slot_button_clicked);
+	    &dreamy_options::slot_color_button_clicked);
     save_settings();
     restore_settings();
   }
@@ -128,7 +133,7 @@ class dreamy_options: public QDialog
   }
 
  private slots:
-   void slot_button_clicked(void)
+   void slot_color_button_clicked(void)
    {
      auto button = qobject_cast<QPushButton *> (sender());
 
@@ -146,6 +151,28 @@ class dreamy_options: public QDialog
 	   (QString("QPushButton {background-color: %1;}").
 	    arg(dialog.selectedColor().name()));
 	 button->setText(dialog.selectedColor().name());
+	 save_settings();
+	 emit accepted();
+       }
+   }
+
+   void slot_font_button_clicked(void)
+   {
+     auto button = qobject_cast<QPushButton *> (sender());
+
+     if(!button)
+       return;
+
+     QFont font;
+     QFontDialog dialog(this);
+
+     font.fromString(button->text());
+     dialog.setCurrentFont(font);
+     dialog.setWindowTitle(tr("Dreamy: Select Font"));
+
+     if(dialog.exec() == QDialog::Accepted)
+       {
+	 button->setText(dialog.selectedFont().toString());
 	 save_settings();
 	 emit accepted();
        }

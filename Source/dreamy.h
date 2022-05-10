@@ -60,11 +60,6 @@ class dreamy: public QWidget
 	    &QPushButton::clicked,
 	    this,
 	    &dreamy::slot_options);
-    m_ui.options->setStyleSheet(QString("QWidget {background-color: %1;}").
-				arg(m_options->background_color().name()));
-    m_ui.time->setFont(m_options->font());
-    m_ui.time->setStyleSheet
-      (QString("QLabel {color: %1;}").arg(m_options->font_color().name()));
     new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q),
 		  this,
 		  SLOT(slot_quit(void)));
@@ -77,6 +72,7 @@ class dreamy: public QWidget
 		   Qt::FramelessWindowHint |
 		   Qt::Popup |
 		   Qt::WindowStaysOnTopHint);
+    slot_options_accepted();
   }
 
   ~dreamy()
