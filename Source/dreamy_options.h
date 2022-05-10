@@ -44,7 +44,8 @@ class dreamy_options: public QDialog
 
     auto font(QApplication::font());
 
-    font.setPointSize(50);
+    if(parent)
+      font.setPointSize(qMin(parent->height(), parent->width()) / 5);
 
     m_ui.font->setText(font.toString());
     m_ui.font_color->setStyleSheet
@@ -67,7 +68,14 @@ class dreamy_options: public QDialog
     QFont font;
 
     font.fromString(m_ui.font->text());
+    font.setHintingPreference(QFont::PreferFullHinting);
+    font.setStyleStrategy(QFont::PreferAntialias);
     return font;
+  }
+
+  bool show_am_pm(void) const
+  {
+    return m_ui.show_am_pm->isChecked();
   }
 
  private:

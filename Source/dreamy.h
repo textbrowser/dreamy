@@ -99,7 +99,10 @@ class dreamy: public QWidget
   {
     auto now(QTime::currentTime());
 
-    m_ui.time->setText(now.toString("hh:mm:ss"));
+    if(m_options->show_am_pm())
+      m_ui.time->setText(now.toString("hh:mm:ss AP"));
+    else
+      m_ui.time->setText(now.toString("hh:mm:ss AP"));
   }
 };
 

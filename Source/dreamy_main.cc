@@ -32,6 +32,6 @@ int main(int argc, char *argv[])
   QApplication qapplication(argc, argv);
   dreamy d;
 
-  d.showFullScreen();
+  d.show();
   return qapplication.exec();
 }
