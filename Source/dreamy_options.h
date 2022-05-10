@@ -45,6 +45,13 @@ class dreamy_options: public QDialog
     m_ui.background_color->setStyleSheet
       ("QPushButton {background-color: black;}");
     m_ui.background_color->setText(QColor(Qt::black).name());
+
+    auto font(QApplication::font());
+
+    if(parent)
+      font.setPointSize(qMin(parent->height(), parent->width()) / 5);
+
+    m_ui.font->setText(font.toString());
     m_ui.font_color->setStyleSheet
       ("QPushButton {background-color: #d8cb32;}");
     m_ui.font_color->setText("#d8cb32");
@@ -114,6 +121,7 @@ class dreamy_options: public QDialog
     QSettings settings(settings_filename(), QSettings::IniFormat);
 
     settings.setValue("background_color", m_ui.background_color->text());
+    settings.setValue("font", m_ui.font->text());
     settings.setValue("font_color", m_ui.font_color->text());
     settings.setValue("show_am_pm", m_ui.show_am_pm->isChecked());
     settings.setValue("show_seconds", m_ui.show_seconds->isChecked());
@@ -134,10 +142,17 @@ class dreamy_options: public QDialog
 
      if(dialog.exec() == QDialog::Accepted)
        {
+	 button->setStyleSheet
+	   (QString("QPushButton {background-color: %1;}").
+	    arg(dialog.selectedColor().name()));
 	 button->setText(dialog.selectedColor().name());
 	 save_settings();
+	 emit accepted();
        }
    }
+
+ signals:
+   void accepted(void);
 };
 
 #endif

@@ -52,6 +52,10 @@ class dreamy: public QWidget
 	    &QTimer::timeout,
 	    this,
 	    &dreamy::slot_tick);
+    connect(m_options,
+	    &dreamy_options::accepted,
+	    this,
+	    &dreamy::slot_options_accepted);
     connect(m_ui.options,
 	    &QPushButton::clicked,
 	    this,
@@ -88,6 +92,17 @@ class dreamy: public QWidget
   void slot_options(void)
   {
     m_options->show();
+  }
+
+  void slot_options_accepted(void)
+  {
+    m_ui.options->setStyleSheet(QString("QWidget {background-color: %1;}").
+				arg(m_options->background_color().name()));
+    m_ui.time->setFont(m_options->font());
+    m_ui.time->setStyleSheet
+      (QString("QLabel {color: %1;}").arg(m_options->font_color().name()));
+    setStyleSheet(QString("QWidget#dreamy {background-color: %1;}").
+		  arg(m_options->background_color().name()));
   }
 
   void slot_quit(void)
