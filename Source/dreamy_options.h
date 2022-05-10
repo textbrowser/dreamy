@@ -78,6 +78,11 @@ class dreamy_options: public QDialog
     return m_ui.show_am_pm->isChecked();
   }
 
+  bool show_seconds(void) const
+  {
+    return m_ui.show_seconds->isChecked();
+  }
+
  private:
   Ui_dreamy_options m_ui;
 };

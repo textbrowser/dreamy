@@ -45,7 +45,10 @@
      <item>
       <widget class="QLabel" name="time">
        <property name="text">
-        <string>Time</string>
+        <string>Dreamy</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>

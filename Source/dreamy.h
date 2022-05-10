@@ -97,12 +97,15 @@ class dreamy: public QWidget
 
   void slot_tick(void)
   {
+    QString seconds(m_options->show_seconds() ? ":ss" : "");
     auto now(QTime::currentTime());
 
     if(m_options->show_am_pm())
-      m_ui.time->setText(now.toString("hh:mm:ss AP"));
+      m_ui.time->setText(now.toString("hh:mm" + seconds + " AP"));
     else
-      m_ui.time->setText(now.toString("hh:mm:ss AP"));
+      m_ui.time->setText
+	((now.toString("hh:mm" + seconds + " AP").
+	  mid(0, 5 + seconds.length())));
   }
 };
 
