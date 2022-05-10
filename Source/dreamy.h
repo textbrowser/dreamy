@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <QtDebug>
 
+#include "dreamy_options.h"
 #include "ui_dreamy.h"
 
 class dreamy: public QWidget
@@ -15,7 +16,12 @@ class dreamy: public QWidget
  public:
   dreamy(void)
   {
+    m_options = nullptr;
     m_ui.setupUi(this);
+    connect(m_ui.options,
+	    &QPushButton::clicked,
+	    this,
+	    &dreamy::slot_options);
     new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q),
 		  this,
 		  SLOT(slot_quit(void)));
@@ -34,8 +40,20 @@ class dreamy: public QWidget
 
  private:
   Ui_dreamy m_ui;
+  dreamy_options *m_options;
 
  private slots:
+  void slot_options(void)
+  {
+    if(!m_options)
+      {
+	m_options = new dreamy_options(this);
+	m_options->setModal(false);
+      }
+
+    m_options->show();
+  }
+
   void slot_quit(void)
   {
     QApplication::exit(0);

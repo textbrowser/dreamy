@@ -61,7 +61,8 @@ QMAKE_EXTRA_TARGETS = purge
 FORMS		= UI/dreamy.ui \
                   UI/dreamy_options.ui
 
-HEADERS		= Source/dreamy.h
+HEADERS		= Source/dreamy.h \
+                  Source/dreamy_options.h
 
 RESOURCES       =
 
