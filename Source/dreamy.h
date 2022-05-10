@@ -6,6 +6,8 @@
 #include <QWidget>
 #include <QtDebug>
 
+#include "ui_dreamy.h"
+
 class dreamy: public QWidget
 {
   Q_OBJECT
@@ -13,6 +15,7 @@ class dreamy: public QWidget
  public:
   dreamy(void)
   {
+    m_ui.setupUi(this);
     new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q),
 		  this,
 		  SLOT(slot_quit(void)));
@@ -28,6 +31,9 @@ class dreamy: public QWidget
   ~dreamy()
   {
   }
+
+ private:
+  Ui_dreamy m_ui;
 
  private slots:
   void slot_quit(void)

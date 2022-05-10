@@ -58,7 +58,8 @@ QMAKE_CXXFLAGS  += -Wformat-overflow=2 \
 
 QMAKE_EXTRA_TARGETS = purge
 
-FORMS		= UI/dreamy_options.ui
+FORMS		= UI/dreamy.ui \
+                  UI/dreamy_options.ui
 
 HEADERS		= Source/dreamy.h
 
