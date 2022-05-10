@@ -1,4 +1,4 @@
-purge.commands = rm -f *~ && rm -f */*~
+purge.commands = find . -name '*~*' -exec rm -f {} \;
 
 CONFIG		+= qt release warn_on
 DEFINES		+= QT_DEPRECATED_WARNINGS
@@ -60,11 +60,11 @@ QMAKE_EXTRA_TARGETS = purge
 
 FORMS		= UI/dreamy_options.ui
 
-HEADERS		=
+HEADERS		= Source/dreamy.h
 
 RESOURCES       =
 
-SOURCES		=
+SOURCES		= Source/dreamy_main.cc
 
 PROJECTNAME	= Dreamy
 TARGET		= Dreamy
