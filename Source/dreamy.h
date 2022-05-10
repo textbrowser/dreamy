@@ -1,10 +1,38 @@
+/*
+** Copyright (c) 2022, Alexis Megas.
+** All rights reserved.
+**
+** Redistribution and use in source and binary forms, with or without
+** modification, are permitted provided that the following conditions
+** are met:
+** 1. Redistributions of source code must retain the above copyright
+**    notice, this list of conditions and the following disclaimer.
+** 2. Redistributions in binary form must reproduce the above copyright
+**    notice, this list of conditions and the following disclaimer in the
+**    documentation and/or other materials provided with the distribution.
+** 3. The name of the author may not be used to endorse or promote products
+**    derived from Dreamy without specific prior written permission.
+**
+** DREAMY IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+** IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+** OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+** IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+** INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+** NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+** DREAMY, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
 #ifndef _dreamy_h_
 #define _dreamy_h_
 
 #include <QApplication>
 #include <QShortcut>
+#include <QTime>
+#include <QTimer>
 #include <QWidget>
-#include <QtDebug>
 
 #include "dreamy_options.h"
 #include "ui_dreamy.h"
@@ -16,18 +44,31 @@ class dreamy: public QWidget
  public:
   dreamy(void)
   {
-    m_options = nullptr;
+    m_options = new dreamy_options(this);
+    m_options->setModal(false);
+    m_timer.start(1000);
     m_ui.setupUi(this);
+    connect(&m_timer,
+	    &QTimer::timeout,
+	    this,
+	    &dreamy::slot_tick);
     connect(m_ui.options,
 	    &QPushButton::clicked,
 	    this,
 	    &dreamy::slot_options);
+    m_ui.options->setStyleSheet(QString("QWidget {background-color: %1;}").
+				arg(m_options->background_color().name()));
+    m_ui.time->setFont(m_options->font());
+    m_ui.time->setStyleSheet
+      (QString("QLabel {color: %1;}").arg(m_options->font_color().name()));
     new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q),
 		  this,
 		  SLOT(slot_quit(void)));
     new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_W),
 		  this,
 		  SLOT(slot_quit(void)));
+    setStyleSheet(QString("QWidget#dreamy {background-color: %1;}").
+		  arg(m_options->background_color().name()));
     setWindowFlags(Qt::Dialog |
 		   Qt::FramelessWindowHint |
 		   Qt::Popup |
@@ -39,24 +80,26 @@ class dreamy: public QWidget
   }
 
  private:
+  QTimer m_timer;
   Ui_dreamy m_ui;
   dreamy_options *m_options;
 
  private slots:
   void slot_options(void)
   {
-    if(!m_options)
-      {
-	m_options = new dreamy_options(this);
-	m_options->setModal(false);
-      }
-
     m_options->show();
   }
 
   void slot_quit(void)
   {
     QApplication::exit(0);
+  }
+
+  void slot_tick(void)
+  {
+    auto now(QTime::currentTime());
+
+    m_ui.time->setText(now.toString("hh:mm:ss"));
   }
 };
 
