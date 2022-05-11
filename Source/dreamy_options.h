@@ -88,7 +88,9 @@ class dreamy_options: public QDialog
   {
     QFont font;
 
-    font.fromString(m_ui.font->text());
+    if(!font.fromString(m_ui.font->text()))
+      font = QApplication::font();
+
     font.setHintingPreference(QFont::PreferFullHinting);
     font.setPointSize(m_ui.font_size->value());
     font.setStyleStrategy(QFont::PreferAntialias);
@@ -215,7 +217,9 @@ class dreamy_options: public QDialog
     QFont font;
     QFontDialog dialog(this);
 
-    font.fromString(button->text());
+    if(!font.fromString(button->text()))
+      font = QApplication::font();
+
     dialog.setCurrentFont(font);
     dialog.setWindowIcon(windowIcon());
     dialog.setWindowTitle(tr("Dreamy: Select Font"));
