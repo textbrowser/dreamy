@@ -56,6 +56,7 @@ class dreamy_options: public QDialog
     m_ui.font_color->setStyleSheet
       ("QPushButton {background-color: #d8cb32;}");
     m_ui.font_color->setText("#d8cb32");
+    m_ui.font_size->setValue(font.pointSize());
     connect(m_ui.background_color,
 	    &QPushButton::clicked,
 	    this,
@@ -68,6 +69,10 @@ class dreamy_options: public QDialog
 	    &QPushButton::clicked,
 	    this,
 	    &dreamy_options::slot_color_button_clicked);
+    connect(m_ui.font_size,
+	    QOverload<int>::of(&QSpinBox::valueChanged),
+	    this,
+	    &dreamy_options::slot_point_size_changed);
     save_settings();
     restore_settings();
   }
@@ -177,6 +182,16 @@ class dreamy_options: public QDialog
 	 emit accepted();
        }
    }
+
+  void slot_point_size_changed(int value)
+  {
+    auto font(this->font());
+
+    font.setPointSize(value);
+    m_ui.font->setText(font.toString());
+    save_settings();
+    emit accepted();
+  }
 
  signals:
    void accepted(void);
