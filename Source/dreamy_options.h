@@ -73,6 +73,10 @@ class dreamy_options: public QDialog
 	    QOverload<int>::of(&QSpinBox::valueChanged),
 	    this,
 	    &dreamy_options::slot_point_size_changed);
+    connect(m_ui.show_date,
+	    QOverload<int>::of(&QCheckBox::stateChanged),
+	    this,
+	    &dreamy_options::slot_checkbox_clicked);
     save_settings();
     restore_settings();
   }
@@ -93,6 +97,7 @@ class dreamy_options: public QDialog
 
     font.fromString(m_ui.font->text());
     font.setHintingPreference(QFont::PreferFullHinting);
+    font.setPointSize(m_ui.font_size->value());
     font.setStyleStrategy(QFont::PreferAntialias);
     return font;
   }
@@ -100,6 +105,11 @@ class dreamy_options: public QDialog
   bool show_am_pm(void) const
   {
     return m_ui.show_am_pm->isChecked();
+  }
+
+  bool show_date(void) const
+  {
+    return m_ui.show_date->isChecked();
   }
 
   bool show_seconds(void) const
@@ -134,54 +144,62 @@ class dreamy_options: public QDialog
     settings.setValue("font", m_ui.font->text());
     settings.setValue("font_color", m_ui.font_color->text());
     settings.setValue("show_am_pm", m_ui.show_am_pm->isChecked());
+    settings.setValue("show_date", m_ui.show_date->isChecked());
     settings.setValue("show_seconds", m_ui.show_seconds->isChecked());
   }
 
  private slots:
-   void slot_color_button_clicked(void)
-   {
-     auto button = qobject_cast<QPushButton *> (sender());
+  void slot_checkbox_clicked(int state)
+  {
+    Q_UNUSED(state);
+    save_settings();
+    emit accepted();
+  }
 
-     if(!button)
-       return;
+  void slot_color_button_clicked(void)
+  {
+    auto button = qobject_cast<QPushButton *> (sender());
 
-     QColorDialog dialog(this);
+    if(!button)
+      return;
 
-     dialog.setCurrentColor(QColor(button->text()));
-     dialog.setWindowTitle(tr("Dreamy: Select Color"));
+    QColorDialog dialog(this);
 
-     if(dialog.exec() == QDialog::Accepted)
-       {
-	 button->setStyleSheet
-	   (QString("QPushButton {background-color: %1;}").
-	    arg(dialog.selectedColor().name()));
-	 button->setText(dialog.selectedColor().name());
-	 save_settings();
-	 emit accepted();
-       }
-   }
+    dialog.setCurrentColor(QColor(button->text()));
+    dialog.setWindowTitle(tr("Dreamy: Select Color"));
 
-   void slot_font_button_clicked(void)
-   {
-     auto button = qobject_cast<QPushButton *> (sender());
+    if(dialog.exec() == QDialog::Accepted)
+      {
+	button->setStyleSheet
+	  (QString("QPushButton {background-color: %1;}").
+	   arg(dialog.selectedColor().name()));
+	button->setText(dialog.selectedColor().name());
+	save_settings();
+	emit accepted();
+      }
+  }
 
-     if(!button)
-       return;
+  void slot_font_button_clicked(void)
+  {
+    auto button = qobject_cast<QPushButton *> (sender());
 
-     QFont font;
-     QFontDialog dialog(this);
+    if(!button)
+      return;
 
-     font.fromString(button->text());
-     dialog.setCurrentFont(font);
-     dialog.setWindowTitle(tr("Dreamy: Select Font"));
+    QFont font;
+    QFontDialog dialog(this);
 
-     if(dialog.exec() == QDialog::Accepted)
-       {
-	 button->setText(dialog.selectedFont().toString());
-	 save_settings();
-	 emit accepted();
-       }
-   }
+    font.fromString(button->text());
+    dialog.setCurrentFont(font);
+    dialog.setWindowTitle(tr("Dreamy: Select Font"));
+
+    if(dialog.exec() == QDialog::Accepted)
+      {
+	button->setText(dialog.selectedFont().toString());
+	save_settings();
+	emit accepted();
+      }
+  }
 
   void slot_point_size_changed(int value)
   {

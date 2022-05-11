@@ -29,8 +29,8 @@
 #define _dreamy_h_
 
 #include <QApplication>
+#include <QDateTime>
 #include <QShortcut>
-#include <QTime>
 #include <QTimer>
 #include <QWidget>
 
@@ -48,6 +48,7 @@ class dreamy: public QWidget
     m_options->setModal(false);
     m_timer.start(1000);
     m_ui.setupUi(this);
+    m_ui.date->setVisible(false);
     connect(&m_timer,
 	    &QTimer::timeout,
 	    this,
@@ -92,11 +93,14 @@ class dreamy: public QWidget
 
   void slot_options_accepted(void)
   {
-    m_ui.options->setStyleSheet(QString("QWidget {background-color: %1;}").
-				arg(m_options->background_color().name()));
-
     auto font(m_options->font());
 
+    m_ui.date->setFont(font);
+    m_ui.date->setStyleSheet
+      (QString("QLabel {color: %1;}").arg(m_options->font_color().name()));
+    m_ui.date->setVisible(m_options->show_date());
+    m_ui.options->setStyleSheet(QString("QWidget {background-color: %1;}").
+				arg(m_options->background_color().name()));
     m_ui.time->setFont(font);
     m_ui.time->setStyleSheet
       (QString("QLabel {color: %1;}").arg(m_options->font_color().name()));
@@ -112,7 +116,7 @@ class dreamy: public QWidget
   void slot_tick(void)
   {
     QString seconds(m_options->show_seconds() ? ":ss" : "");
-    auto now(QTime::currentTime());
+    auto now(QDateTime::currentDateTime());
 
     if(m_options->show_am_pm())
       m_ui.time->setText(now.toString("hh:mm" + seconds + " AP"));
@@ -120,6 +124,9 @@ class dreamy: public QWidget
       m_ui.time->setText
 	((now.toString("hh:mm" + seconds + " AP").
 	  mid(0, 5 + seconds.length())));
+
+    if(m_options->show_date())
+      m_ui.date->setText(now.toString("yyyy-MM-dd"));
   }
 };
 
