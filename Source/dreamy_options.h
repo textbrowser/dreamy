@@ -175,6 +175,7 @@ class dreamy_options: public QDialog
   {
     QSettings settings(settings_filename(), QSettings::IniFormat);
 
+    settings.setValue("angle", m_ui.angle->value());
     settings.setValue("background_color", m_ui.background_color->text());
     settings.setValue("font", m_ui.font->text());
     settings.setValue("font_color", m_ui.font_color->text());
@@ -257,6 +258,9 @@ class dreamy_options: public QDialog
       m_ui.angle->setValue(270);
     else
       m_ui.angle->setValue(0);
+
+    save_settings();
+    emit accepted();
   }
 
  signals:
