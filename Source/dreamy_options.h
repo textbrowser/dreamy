@@ -59,7 +59,15 @@ class dreamy_options: public QDialog
 	    QOverload<int>::of(&QSpinBox::valueChanged),
 	    this,
 	    &dreamy_options::slot_point_size_changed);
+    connect(m_ui.show_am_pm,
+	    QOverload<int>::of(&QCheckBox::stateChanged),
+	    this,
+	    &dreamy_options::slot_checkbox_clicked);
     connect(m_ui.show_date,
+	    QOverload<int>::of(&QCheckBox::stateChanged),
+	    this,
+	    &dreamy_options::slot_checkbox_clicked);
+    connect(m_ui.show_seconds,
 	    QOverload<int>::of(&QCheckBox::stateChanged),
 	    this,
 	    &dreamy_options::slot_checkbox_clicked);
@@ -126,15 +134,30 @@ class dreamy_options: public QDialog
        arg(settings.value("background_color").toString().mid(0, 25)));
     m_ui.background_color->setText
       (settings.value("background_color").toString().mid(0, 25));
+
+    QFont font;
+
+    if(!font.fromString(settings.value("font").toString().mid(0, 100)))
+      font = QApplication::font();
+
+    m_ui.font->setText(font.toString());
     m_ui.font_color->setStyleSheet
       (QString("QPushButton {background-color: %1;}").
        arg(settings.value("font_color").toString().mid(0, 25)));
     m_ui.font_color->setText
       (settings.value("font_color").toString().mid(0, 25));
+    m_ui.font_size->blockSignals(true);
     m_ui.font_size->setValue(settings.value("font_size").toInt());
+    m_ui.font_size->blockSignals(false);
+    m_ui.show_am_pm->blockSignals(true);
     m_ui.show_am_pm->setChecked(settings.value("show_am_pm").toBool());
+    m_ui.show_am_pm->blockSignals(false);
+    m_ui.show_date->blockSignals(true);
     m_ui.show_date->setChecked(settings.value("show_date").toBool());
+    m_ui.show_date->blockSignals(false);
+    m_ui.show_seconds->blockSignals(true);
     m_ui.show_seconds->setChecked(settings.value("show_seconds").toBool());
+    m_ui.show_seconds->blockSignals(false);
   }
 
   void save_settings(void)

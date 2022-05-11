@@ -61,6 +61,9 @@ class dreamy: public QWidget
 	    &QPushButton::clicked,
 	    this,
 	    &dreamy::slot_options);
+    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_G),
+		  this,
+		  SLOT(slot_options(void)));
     new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q),
 		  this,
 		  SLOT(slot_quit(void)));
@@ -120,10 +123,10 @@ class dreamy: public QWidget
     auto now(QDateTime::currentDateTime());
 
     if(m_options->show_am_pm())
-      m_ui.time->setText(now.toString("hh:mm" + seconds + " AP"));
+      m_ui.time->setText(now.toString("h:mm" + seconds + " AP"));
     else
       m_ui.time->setText
-	((now.toString("hh:mm" + seconds + " AP").
+	((now.toString("h:mm" + seconds + " AP").
 	  mid(0, 5 + seconds.length())));
 
     if(m_options->show_date())
