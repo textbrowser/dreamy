@@ -95,13 +95,14 @@ class dreamy: public QWidget
   {
     auto font(m_options->font());
 
+    font.setPointSize(font.pointSize() / 4);
     m_ui.date->setFont(font);
     m_ui.date->setStyleSheet
       (QString("QLabel {color: %1;}").arg(m_options->font_color().name()));
     m_ui.date->setVisible(m_options->show_date());
     m_ui.options->setStyleSheet(QString("QWidget {background-color: %1;}").
 				arg(m_options->background_color().name()));
-    m_ui.time->setFont(font);
+    m_ui.time->setFont(m_options->font());
     m_ui.time->setStyleSheet
       (QString("QLabel {color: %1;}").arg(m_options->font_color().name()));
     setStyleSheet(QString("QWidget#dreamy {background-color: %1;}").

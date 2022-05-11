@@ -43,20 +43,6 @@ class dreamy_options: public QDialog
   dreamy_options(QWidget *parent):QDialog(parent)
   {
     m_ui.setupUi(this);
-    m_ui.background_color->setStyleSheet
-      ("QPushButton {background-color: black;}");
-    m_ui.background_color->setText(QColor(Qt::black).name());
-
-    auto font(QApplication::font());
-
-    if(parent)
-      font.setPointSize(qMin(parent->height(), parent->width()) / 5);
-
-    m_ui.font->setText(font.toString());
-    m_ui.font_color->setStyleSheet
-      ("QPushButton {background-color: #d8cb32;}");
-    m_ui.font_color->setText("#d8cb32");
-    m_ui.font_size->setValue(font.pointSize());
     connect(m_ui.background_color,
 	    &QPushButton::clicked,
 	    this,
@@ -77,7 +63,6 @@ class dreamy_options: public QDialog
 	    QOverload<int>::of(&QCheckBox::stateChanged),
 	    this,
 	    &dreamy_options::slot_checkbox_clicked);
-    save_settings();
     restore_settings();
   }
 
@@ -134,6 +119,22 @@ class dreamy_options: public QDialog
 
   void restore_settings(void)
   {
+    QSettings settings(settings_filename(), QSettings::IniFormat);
+
+    m_ui.background_color->setStyleSheet
+      (QString("QPushButton {background-color: %1;}").
+       arg(settings.value("background_color").toString().mid(0, 25)));
+    m_ui.background_color->setText
+      (settings.value("background_color").toString().mid(0, 25));
+    m_ui.font_color->setStyleSheet
+      (QString("QPushButton {background-color: %1;}").
+       arg(settings.value("font_color").toString().mid(0, 25)));
+    m_ui.font_color->setText
+      (settings.value("font_color").toString().mid(0, 25));
+    m_ui.font_size->setValue(settings.value("font_size").toInt());
+    m_ui.show_am_pm->setChecked(settings.value("show_am_pm").toBool());
+    m_ui.show_date->setChecked(settings.value("show_date").toBool());
+    m_ui.show_seconds->setChecked(settings.value("show_seconds").toBool());
   }
 
   void save_settings(void)
@@ -143,6 +144,7 @@ class dreamy_options: public QDialog
     settings.setValue("background_color", m_ui.background_color->text());
     settings.setValue("font", m_ui.font->text());
     settings.setValue("font_color", m_ui.font_color->text());
+    settings.setValue("font_size", m_ui.font_size->value());
     settings.setValue("show_am_pm", m_ui.show_am_pm->isChecked());
     settings.setValue("show_date", m_ui.show_date->isChecked());
     settings.setValue("show_seconds", m_ui.show_seconds->isChecked());
