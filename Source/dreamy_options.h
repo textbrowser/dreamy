@@ -191,6 +191,7 @@ class dreamy_options: public QDialog
     QColorDialog dialog(this);
 
     dialog.setCurrentColor(QColor(button->text()));
+    dialog.setWindowIcon(windowIcon());
     dialog.setWindowTitle(tr("Dreamy: Select Color"));
 
     if(dialog.exec() == QDialog::Accepted)
@@ -216,6 +217,7 @@ class dreamy_options: public QDialog
 
     font.fromString(button->text());
     dialog.setCurrentFont(font);
+    dialog.setWindowIcon(windowIcon());
     dialog.setWindowTitle(tr("Dreamy: Select Font"));
 
     if(dialog.exec() == QDialog::Accepted)
