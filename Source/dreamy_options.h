@@ -59,6 +59,10 @@ class dreamy_options: public QDialog
 	    QOverload<int>::of(&QSpinBox::valueChanged),
 	    this,
 	    &dreamy_options::slot_point_size_changed);
+    connect(m_ui.rotate,
+	    &QPushButton::clicked,
+	    this,
+	    &dreamy_options::slot_rotate);
     connect(m_ui.show_am_pm,
 	    QOverload<int>::of(&QCheckBox::stateChanged),
 	    this,
@@ -110,6 +114,11 @@ class dreamy_options: public QDialog
   bool show_seconds(void) const
   {
     return m_ui.show_seconds->isChecked();
+  }
+
+  int angle(void) const
+  {
+    return m_ui.angle->value();
   }
 
  private:
@@ -240,6 +249,14 @@ class dreamy_options: public QDialog
     m_ui.font->setText(font.toString());
     save_settings();
     emit accepted();
+  }
+
+  void slot_rotate(void)
+  {
+    if(m_ui.angle->value() == 0)
+      m_ui.angle->setValue(270);
+    else
+      m_ui.angle->setValue(0);
   }
 
  signals:

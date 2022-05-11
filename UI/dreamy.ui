@@ -53,6 +53,9 @@
          <property name="text">
           <string>Dreamy</string>
          </property>
+         <property name="textFormat">
+          <enum>Qt::PlainText</enum>
+         </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
@@ -60,6 +63,9 @@
        </item>
        <item>
         <widget class="QLabel" name="date">
+         <property name="textFormat">
+          <enum>Qt::PlainText</enum>
+         </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>

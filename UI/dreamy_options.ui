@@ -104,6 +104,9 @@
              <property name="suffix">
               <string> Degrees</string>
              </property>
+             <property name="maximum">
+              <number>270</number>
+             </property>
             </widget>
            </item>
           </layout>
