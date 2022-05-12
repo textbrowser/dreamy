@@ -47,7 +47,7 @@
       </spacer>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="clock_layout">
        <item>
         <widget class="dreamy_label" name="time">
          <property name="textFormat">

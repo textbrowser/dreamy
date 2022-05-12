@@ -96,6 +96,9 @@ class dreamy: public QWidget
 
   void slot_options_accepted(void)
   {
+    m_ui.clock_layout->removeWidget(m_ui.date);
+    m_ui.clock_layout->removeWidget(m_ui.time);
+
     auto font(m_options->font());
 
     font.setPointSize(font.pointSize() / 4);
@@ -112,6 +115,17 @@ class dreamy: public QWidget
     m_ui.time->set_angle(m_options->angle());
     setStyleSheet(QString("QWidget#dreamy {background-color: %1;}").
 		  arg(m_options->background_color().name()));
+
+    if(m_options->angle() == 0)
+      {
+	m_ui.clock_layout->addWidget(m_ui.time);
+	m_ui.clock_layout->addWidget(m_ui.date);
+      }
+    else
+      {
+	m_ui.clock_layout->addWidget(m_ui.date);
+	m_ui.clock_layout->addWidget(m_ui.time);
+      }
   }
 
   void slot_quit(void)

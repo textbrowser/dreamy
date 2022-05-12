@@ -29,7 +29,7 @@
         <x>0</x>
         <y>0</y>
         <width>384</width>
-        <height>334</height>
+        <height>294</height>
        </rect>
       </property>
       <layout class="QFormLayout" name="formLayout">
@@ -193,6 +193,13 @@
        </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="button_box">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Close</set>
+     </property>
     </widget>
    </item>
   </layout>
