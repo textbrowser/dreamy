@@ -103,11 +103,13 @@ class dreamy: public QWidget
     m_ui.date->setStyleSheet
       (QString("QLabel {color: %1;}").arg(m_options->font_color().name()));
     m_ui.date->setVisible(m_options->show_date());
+    m_ui.date->set_angle(m_options->angle());
     m_ui.options->setStyleSheet(QString("QWidget {background-color: %1;}").
 				arg(m_options->background_color().name()));
     m_ui.time->setFont(m_options->font());
     m_ui.time->setStyleSheet
       (QString("QLabel {color: %1;}").arg(m_options->font_color().name()));
+    m_ui.time->set_angle(m_options->angle());
     setStyleSheet(QString("QWidget#dreamy {background-color: %1;}").
 		  arg(m_options->background_color().name()));
   }

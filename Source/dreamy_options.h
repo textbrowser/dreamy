@@ -140,6 +140,7 @@ class dreamy_options: public QDialog
   {
     QSettings settings(settings_filename(), QSettings::IniFormat);
 
+    m_ui.angle->setValue(settings.value("angle").toInt());
     m_ui.background_color->setStyleSheet
       (QString("QPushButton {background-color: %1;}").
        arg(settings.value("background_color", m_ui.background_color->text()).

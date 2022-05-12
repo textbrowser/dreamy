@@ -38,16 +38,46 @@ class dreamy_label: public QLabel
  public:
   dreamy_label(QWidget *parent):QLabel(parent)
   {
+    m_angle = 0;
   }
 
   ~dreamy_label()
   {
   }
 
+  void set_angle(int angle)
+  {
+    switch(angle)
+      {
+      case 180:
+	{
+	  m_angle = angle;
+	  break;
+	}
+      default:
+	{
+	  m_angle = 0;
+	  break;
+	}
+      }
+  }
+
+ private:
+  int m_angle;
+
  protected:
   void paintEvent(QPaintEvent *event)
   {
-    QLabel::paintEvent(event);
+    if(m_angle == 0)
+      QLabel::paintEvent(event);
+    else
+      {
+	QPainter painter(this);
+
+	painter.translate(width(), height());
+	painter.rotate(m_angle);
+	painter.drawText(0, 0, width(), height(), alignment(), text());
+      }
   }
 };
 
