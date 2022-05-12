@@ -47,6 +47,17 @@ class dreamy_options: public QDialog
 	    &QPushButton::clicked,
 	    this,
 	    &dreamy_options::slot_color_button_clicked);
+#ifdef Q_OS_ANDROID
+    connect(m_ui.button_box->button(QDialogButtonBox::Close),
+	    &QPushButton::clicked,
+	    this,
+	    &dreamy_options::hide);
+#else
+    connect(m_ui.button_box->button(QDialogButtonBox::Close),
+	    &QPushButton::clicked,
+	    this,
+	    &dreamy_options::close);
+#endif
     connect(m_ui.font,
 	    &QPushButton::clicked,
 	    this,
