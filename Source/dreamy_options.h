@@ -33,6 +33,7 @@
 #include <QFontDialog>
 #include <QSettings>
 
+#include "dreamy_version.h"
 #include "ui_dreamy_options.h"
 
 class dreamy_options: public QDialog
@@ -43,6 +44,7 @@ class dreamy_options: public QDialog
   dreamy_options(QWidget *parent):QDialog(parent)
   {
     m_ui.setupUi(this);
+    m_ui.version->setText(tr("Dreamy version %1.").arg(DREAMY_VERSION));
     connect(m_ui.background_color,
 	    &QPushButton::clicked,
 	    this,
