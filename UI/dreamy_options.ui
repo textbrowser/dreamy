@@ -107,7 +107,7 @@
               <string> Degrees</string>
              </property>
              <property name="maximum">
-              <number>270</number>
+              <number>180</number>
              </property>
             </widget>
            </item>
