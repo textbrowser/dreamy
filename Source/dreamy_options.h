@@ -80,19 +80,19 @@ class dreamy_options: public QDialog
 
   QColor background_color(void) const
   {
-    return QColor(m_ui.background_color->property("text").toString());
+    return QColor(m_ui.background_color->text().remove('&'));
   }
 
   QColor font_color(void) const
   {
-    return QColor(m_ui.font_color->property("text").toString());
+    return QColor(m_ui.font_color->text().remove('&'));
   }
 
   QFont font(void) const
   {
     QFont font;
 
-    if(!font.fromString(m_ui.font->property("text").toString()))
+    if(!font.fromString(m_ui.font->text().remove('&')))
       font = QApplication::font();
 
     font.setHintingPreference(QFont::PreferFullHinting);
@@ -144,12 +144,9 @@ class dreamy_options: public QDialog
       (QString("QPushButton {background-color: %1;}").
        arg(settings.value("background_color", m_ui.background_color->text()).
 	   toString().trimmed().mid(0, 25)));
-    m_ui.background_color->setProperty
-      ("text",
-       settings.value("background_color", m_ui.background_color->text()).
-       toString().trimmed().mid(0, 25));
     m_ui.background_color->setText
-      (m_ui.background_color->property("text").toString());
+      (settings.value("background_color", m_ui.background_color->text()).
+       toString().remove('&').trimmed().mid(0, 25));
 
     QFont font;
     auto string(settings.value("font").toString().trimmed().mid(0, 100));
@@ -161,17 +158,14 @@ class dreamy_options: public QDialog
       (qBound(m_ui.font_size->minimum(),
 	      settings.value("font_size").toInt(),
 	      m_ui.font_size->maximum()));
-    m_ui.font->setProperty("text", font.toString());
     m_ui.font->setText(font.toString());
     m_ui.font_color->setStyleSheet
       (QString("QPushButton {background-color: %1;}").
        arg(settings.value("font_color", m_ui.font_color->text()).
 	   toString().trimmed().mid(0, 25)));
-    m_ui.font_color->setProperty
-      ("text",
-       settings.value("font_color", m_ui.font_color->text()).
-       toString().trimmed().mid(0, 25));
-    m_ui.font_color->setText(m_ui.font_color->property("text").toString());
+    m_ui.font_color->setText
+      (settings.value("font_color", m_ui.font_color->text()).
+       toString().remove('&').trimmed().mid(0, 25));
     m_ui.font_size->blockSignals(true);
     m_ui.font_size->setValue(settings.value("font_size").toInt());
     m_ui.font_size->blockSignals(false);
@@ -192,10 +186,9 @@ class dreamy_options: public QDialog
 
     settings.setValue("angle", m_ui.angle->value());
     settings.setValue
-      ("background_color", m_ui.background_color->property("text").toString());
-    settings.setValue("font", m_ui.font->property("text").toString());
-    settings.setValue
-      ("font_color", m_ui.font_color->property("text").toString());
+      ("background_color", m_ui.background_color->text().remove('&'));
+    settings.setValue("font", m_ui.font->text().remove('&'));
+    settings.setValue("font_color", m_ui.font_color->text().remove('&'));
     settings.setValue("font_size", m_ui.font_size->value());
     settings.setValue("show_am_pm", m_ui.show_am_pm->isChecked());
     settings.setValue("show_date", m_ui.show_date->isChecked());
@@ -219,7 +212,7 @@ class dreamy_options: public QDialog
 
     QColorDialog dialog(this);
 
-    dialog.setCurrentColor(QColor(button->property("text")));
+    dialog.setCurrentColor(QColor(button->text().remove('&')));
     dialog.setWindowIcon(windowIcon());
     dialog.setWindowTitle(tr("Dreamy: Select Color"));
 
@@ -228,7 +221,6 @@ class dreamy_options: public QDialog
 	button->setStyleSheet
 	  (QString("QPushButton {background-color: %1;}").
 	   arg(dialog.selectedColor().name()));
-	button->setProperty("text", dialog.selectedColor().name());
 	button->setText(dialog.selectedColor().name());
 	save_settings();
 	emit accepted();
@@ -245,7 +237,7 @@ class dreamy_options: public QDialog
     QFont font;
     QFontDialog dialog(this);
 
-    if(!font.fromString(button->property("text")))
+    if(!font.fromString(button->text().remove('&')))
       font = QApplication::font();
 
     dialog.setCurrentFont(font);
@@ -254,7 +246,6 @@ class dreamy_options: public QDialog
 
     if(dialog.exec() == QDialog::Accepted)
       {
-	button->setProperty("text", dialog.selectedFont().toString());	
 	button->setText(dialog.selectedFont().toString());
 	save_settings();
 	emit accepted();
@@ -266,7 +257,6 @@ class dreamy_options: public QDialog
     auto font(this->font());
 
     font.setPointSize(value);
-    m_ui.font->setProperty("text", font.toString());
     m_ui.font->setText(font.toString());
     save_settings();
     emit accepted();
