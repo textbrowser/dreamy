@@ -42,7 +42,7 @@ class dreamy: public QWidget
   Q_OBJECT
 
  public:
-  dreamy(void)
+  dreamy(void):QWidget()
   {
     m_options = new dreamy_options(this);
     m_options->setModal(false);

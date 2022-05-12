@@ -142,21 +142,30 @@ class dreamy_options: public QDialog
 
     m_ui.background_color->setStyleSheet
       (QString("QPushButton {background-color: %1;}").
-       arg(settings.value("background_color").toString().mid(0, 25)));
+       arg(settings.value("background_color", m_ui.background_color->text()).
+	   toString().trimmed().mid(0, 25)));
     m_ui.background_color->setText
-      (settings.value("background_color").toString().mid(0, 25));
+      (settings.value("background_color", m_ui.background_color->text()).
+       toString().trimmed().mid(0, 25));
 
     QFont font;
+    auto string(settings.value("font").toString().trimmed().mid(0, 100));
 
-    if(!font.fromString(settings.value("font").toString().mid(0, 100)))
+    if(string.isEmpty() || !font.fromString(string))
       font = QApplication::font();
 
+    font.setPointSize
+      (qBound(m_ui.font_size->minimum(),
+	      settings.value("font_size").toInt(),
+	      m_ui.font_size->maximum()));
     m_ui.font->setText(font.toString());
     m_ui.font_color->setStyleSheet
       (QString("QPushButton {background-color: %1;}").
-       arg(settings.value("font_color").toString().mid(0, 25)));
+       arg(settings.value("font_color", m_ui.font_color->text()).
+	   toString().trimmed().mid(0, 25)));
     m_ui.font_color->setText
-      (settings.value("font_color").toString().mid(0, 25));
+      (settings.value("font_color", m_ui.font_color->text()).
+       toString().trimmed().mid(0, 25));
     m_ui.font_size->blockSignals(true);
     m_ui.font_size->setValue(settings.value("font_size").toInt());
     m_ui.font_size->blockSignals(false);

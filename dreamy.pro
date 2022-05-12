@@ -62,6 +62,7 @@ FORMS		= UI/dreamy.ui \
                   UI/dreamy_options.ui
 
 HEADERS		= Source/dreamy.h \
+                  Source/dreamy_label.h \
                   Source/dreamy_options.h
 
 RESOURCES       = Icons/icons.qrc

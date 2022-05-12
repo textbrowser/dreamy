@@ -49,7 +49,7 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QLabel" name="time">
+        <widget class="dreamy_label" name="time">
          <property name="textFormat">
           <enum>Qt::PlainText</enum>
          </property>
@@ -59,7 +59,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="date">
+        <widget class="dreamy_label" name="date">
          <property name="textFormat">
           <enum>Qt::PlainText</enum>
          </property>
@@ -127,6 +127,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>dreamy_label</class>
+   <extends>QLabel</extends>
+   <header>Source/dreamy_label.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../Icons/icons.qrc"/>
  </resources>
