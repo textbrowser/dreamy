@@ -101,7 +101,7 @@ class dreamy: public QWidget
 
     auto font(m_options->font());
 
-    font.setPointSize(font.pointSize() / 4);
+    font.setPointSize(font.pointSize() / 3);
     m_ui.date->setFont(font);
     m_ui.date->setStyleSheet
       (QString("QLabel {color: %1;}").arg(m_options->font_color().name()));

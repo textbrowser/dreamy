@@ -171,10 +171,10 @@
          <item>
           <widget class="QSpinBox" name="font_size">
            <property name="minimum">
-            <number>100</number>
+            <number>25</number>
            </property>
            <property name="maximum">
-            <number>200</number>
+            <number>500</number>
            </property>
           </widget>
          </item>
