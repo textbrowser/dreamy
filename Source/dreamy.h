@@ -61,6 +61,7 @@ class dreamy: public QWidget
 	    &QPushButton::clicked,
 	    this,
 	    &dreamy::slot_options);
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_G),
 		  this,
 		  SLOT(slot_options(void)));
@@ -70,6 +71,17 @@ class dreamy: public QWidget
     new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_W),
 		  this,
 		  SLOT(slot_quit(void)));
+#else
+    new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_G),
+		  this,
+		  SLOT(slot_options(void)));
+    new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Q),
+		  this,
+		  SLOT(slot_quit(void)));
+    new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_W),
+		  this,
+		  SLOT(slot_quit(void)));
+#endif
     setStyleSheet(QString("QWidget#dreamy {background-color: %1;}").
 		  arg(m_options->background_color().name()));
     setWindowFlags(Qt::Dialog |
