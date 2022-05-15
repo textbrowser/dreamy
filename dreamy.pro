@@ -32,7 +32,6 @@ QMAKE_CXXFLAGS  += -Wall \
 QMAKE_CXXFLAGS  += -Wall \
                    -Wcast-align \
                    -Wcast-qual \
-                   -Wdouble-promotion \
                    -Werror \
                    -Werror=format-security \
                    -Wextra \
@@ -41,7 +40,6 @@ QMAKE_CXXFLAGS  += -Wall \
                    -Wpointer-arith \
                    -Wstack-protector \
                    -Wstrict-overflow=1 \
-                   -Wundef \
                    -Wzero-as-null-pointer-constant \
                    -fPIE \
                    -fstack-protector-all \
