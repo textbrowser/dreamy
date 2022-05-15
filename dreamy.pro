@@ -37,7 +37,6 @@ QMAKE_CXXFLAGS  += -Wall \
                    -Werror=format-security \
                    -Wextra \
                    -Wformat=2 \
-                   -Wno-deprecated-copy \
                    -Woverloaded-virtual \
                    -Wpointer-arith \
                    -Wstack-protector \
