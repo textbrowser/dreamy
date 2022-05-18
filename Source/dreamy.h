@@ -83,10 +83,7 @@ class dreamy: public QMainWindow
 #endif
     setStyleSheet(QString("QWidget#dreamy {background-color: %1;}").
 		  arg(m_options->background_color().name()));
-    setWindowFlags(Qt::Dialog |
-		   Qt::FramelessWindowHint |
-		   Qt::Popup |
-		   Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     slot_options_accepted();
   }
 
