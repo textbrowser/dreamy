@@ -32,17 +32,16 @@
 #include <QDateTime>
 #include <QShortcut>
 #include <QTimer>
-#include <QWidget>
 
 #include "dreamy_options.h"
 #include "ui_dreamy.h"
 
-class dreamy: public QWidget
+class dreamy: public QMainWindow
 {
   Q_OBJECT
 
  public:
-  dreamy(void):QWidget()
+  dreamy(void):QMainWindow()
   {
     m_options = new dreamy_options(this);
     m_options->setModal(false);
