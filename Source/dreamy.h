@@ -83,6 +83,8 @@ class dreamy: public QMainWindow
 #endif
     setStyleSheet(QString("QWidget#dreamy {background-color: %1;}").
 		  arg(m_options->background_color().name()));
+    setToolTip(tr("Press Ctrl+G for Settings. "
+		  "Press Ctrl+Q or Ctrl+W to exit Dreamy."));
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     slot_options_accepted();
   }
