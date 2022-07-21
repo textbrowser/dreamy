@@ -30,7 +30,6 @@ QMAKE_CXXFLAGS  += -Wall \
                    -std=c++11
 } else {
 QMAKE_CXXFLAGS  += -Wall \
-                   -Wcast-align \
                    -Wcast-qual \
                    -Werror \
                    -Werror=format-security \
