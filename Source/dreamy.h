@@ -30,6 +30,11 @@
 
 #include <QApplication>
 #include <QDateTime>
+#ifdef Q_OS_ANDROID
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 1, 0))
+#include <QJniObject>
+#endif
+#endif
 #include <QShortcut>
 #include <QTimer>
 
@@ -48,6 +53,9 @@ class dreamy: public QMainWindow
     m_timer.start(1000);
     m_ui.setupUi(this);
     m_ui.date->setVisible(false);
+#ifndef Q_OS_ANDROID
+    m_ui.quit->setVisible(false);
+#endif
     connect(&m_timer,
 	    &QTimer::timeout,
 	    this,
@@ -60,6 +68,10 @@ class dreamy: public QMainWindow
 	    &QPushButton::clicked,
 	    this,
 	    &dreamy::slot_options);
+    connect(m_ui.quit,
+	    &QPushButton::clicked,
+	    this,
+	    &dreamy::slot_quit);
 #if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_G),
 		  this,
@@ -141,6 +153,14 @@ class dreamy: public QMainWindow
   void slot_quit(void)
   {
     QApplication::exit(0);
+#ifdef Q_OS_ANDROID
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 1, 0))
+    auto activity = QJniObject
+      (QNativeInterface::QAndroidApplication::context());
+
+    activity.callMethod<void> ("finishAndRemoveTask");
+#endif
+#endif
   }
 
   void slot_tick(void)
