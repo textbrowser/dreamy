@@ -53,9 +53,6 @@ class dreamy: public QMainWindow
     m_timer.start(1000);
     m_ui.setupUi(this);
     m_ui.date->setVisible(false);
-#ifndef Q_OS_ANDROID
-    m_ui.quit->setVisible(false);
-#endif
     connect(&m_timer,
 	    &QTimer::timeout,
 	    this,
@@ -131,6 +128,8 @@ class dreamy: public QMainWindow
     m_ui.date->set_angle(m_options->angle());
     m_ui.options->setStyleSheet(QString("QWidget {background-color: %1;}").
 				arg(m_options->background_color().name()));
+    m_ui.quit->setStyleSheet(QString("QWidget {background-color: %1;}").
+			     arg(m_options->background_color().name()));
     m_ui.time->setFont(m_options->font());
     m_ui.time->setStyleSheet
       (QString("QLabel {color: %1;}").arg(m_options->font_color().name()));

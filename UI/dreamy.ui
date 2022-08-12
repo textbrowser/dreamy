@@ -120,14 +120,17 @@
          <string>Floating Menu</string>
         </property>
         <property name="text">
-         <string/>
+         <string>Options</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="quit">
+        <property name="toolTip">
+         <string>Quit Dreamy</string>
+        </property>
         <property name="text">
-         <string/>
+         <string>Quit</string>
         </property>
        </widget>
       </item>
