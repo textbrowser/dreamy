@@ -105,7 +105,8 @@ class dreamy_options: public QDialog
   {
     QFont font;
 
-    if(!font.fromString(m_ui.font->text().remove('&')))
+    if(m_ui.font->text().remove('&').trimmed().isEmpty() ||
+       !font.fromString(m_ui.font->text().remove('&')))
       font = QApplication::font();
 
     font.setHintingPreference(QFont::PreferFullHinting);
@@ -251,7 +252,8 @@ class dreamy_options: public QDialog
     QFont font;
     QFontDialog dialog(this);
 
-    if(!font.fromString(button->text().remove('&')))
+    if(button->text().remove('&').trimmed().isEmpty() ||
+       !font.fromString(button->text().remove('&')))
       font = QApplication::font();
 
     dialog.setCurrentFont(font);
