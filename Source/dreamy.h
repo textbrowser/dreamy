@@ -110,8 +110,12 @@ class dreamy: public QMainWindow
  private slots:
   void slot_options(void)
   {
+#ifdef Q_OS_ANDROID
+    m_options->showFullScreen();
+#else
     m_options->resize(sizeHint());
     m_options->show();
+#endif
   }
 
   void slot_options_accepted(void)
