@@ -107,11 +107,17 @@ class dreamy: public QMainWindow
   Ui_dreamy m_ui;
   dreamy_options *m_options;
 
+  void mouseDoubleClickEvent(QMouseEvent *event)
+  {
+    QMainWindow::mouseDoubleClickEvent(event);
+    slot_options();
+  }
+
  private slots:
   void slot_options(void)
   {
 #ifdef Q_OS_ANDROID
-    m_options->showFullScreen();
+    m_options->resize(400, 600);
 #else
     m_options->resize(sizeHint());
     m_options->show();
