@@ -110,6 +110,7 @@ class dreamy: public QMainWindow
  private slots:
   void slot_options(void)
   {
+    m_options->resize(sizeHint());
     m_options->show();
   }
 
