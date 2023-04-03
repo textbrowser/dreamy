@@ -120,8 +120,8 @@ class dreamy: public QMainWindow
     m_options->resize(400, 600);
 #else
     m_options->resize(sizeHint());
-    m_options->show();
 #endif
+    m_options->show();
   }
 
   void slot_options_accepted(void)
