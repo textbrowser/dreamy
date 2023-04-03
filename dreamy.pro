@@ -68,17 +68,17 @@ SOURCES		= Source/dreamy_main.cc
 PROJECTNAME	= Dreamy
 TARGET		= Dreamy
 
-DISTFILES += \
-    android/AndroidManifest.xml \
-    android/build.gradle \
-    android/gradle.properties \
-    android/gradle/wrapper/gradle-wrapper.jar \
-    android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew \
-    android/gradlew.bat \
-    android/res/values/libs.xml
+android {
+DISTFILES += android/AndroidManifest.xml \
+             android/build.gradle \
+             android/gradle.properties \
+             android/gradle/wrapper/gradle-wrapper.jar \
+             android/gradle/wrapper/gradle-wrapper.properties \
+             android/gradlew \
+             android/gradlew.bat \
+             android/res/values/libs.xml
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
-    ANDROID_PACKAGE_SOURCE_DIR = \
-        $$PWD/android
+    ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+}
 }
