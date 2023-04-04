@@ -52,6 +52,11 @@ QMAKE_CXXFLAGS  += -Wformat-overflow=2 \
 }
 }
 
+greaterThan(QT_MAJOR_VERSION, 5) {
+QMAKE_CXXFLAGS += -std=c++17
+QMAKE_CXXFLAGS -= -std=c++11
+}
+
 QMAKE_EXTRA_TARGETS = purge
 
 FORMS		= UI/dreamy.ui \
