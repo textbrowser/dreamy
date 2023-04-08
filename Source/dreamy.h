@@ -52,7 +52,7 @@ class dreamy: public QMainWindow
     m_options->setModal(false);
     m_timer.start(1000);
     m_ui.setupUi(this);
-    m_ui.date->setVisible(false);
+    m_ui.date->setVisible(true);
     connect(&m_timer,
 	    &QTimer::timeout,
 	    this,

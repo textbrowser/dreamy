@@ -185,13 +185,14 @@ class dreamy_options: public QDialog
     m_ui.font_size->setValue(settings.value("font_size").toInt());
     m_ui.font_size->blockSignals(false);
     m_ui.show_am_pm->blockSignals(true);
-    m_ui.show_am_pm->setChecked(settings.value("show_am_pm").toBool());
+    m_ui.show_am_pm->setChecked(settings.value("show_am_pm", true).toBool());
     m_ui.show_am_pm->blockSignals(false);
     m_ui.show_date->blockSignals(true);
-    m_ui.show_date->setChecked(settings.value("show_date").toBool());
+    m_ui.show_date->setChecked(settings.value("show_date", true).toBool());
     m_ui.show_date->blockSignals(false);
     m_ui.show_seconds->blockSignals(true);
-    m_ui.show_seconds->setChecked(settings.value("show_seconds").toBool());
+    m_ui.show_seconds->setChecked
+      (settings.value("show_seconds", true).toBool());
     m_ui.show_seconds->blockSignals(false);
   }
 
