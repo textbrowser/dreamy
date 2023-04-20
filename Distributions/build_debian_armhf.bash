@@ -18,7 +18,7 @@ cp -p ./Dreamy ./opt/dreamy/.
 mkdir -p dreamy-debian.d/opt
 cp -pr DEBIAN-ARM dreamy-debian.d/DEBIAN
 cp -r ./opt/dreamy dreamy-debian.d/opt/.
-fakeroot dpkg-deb -Zgzip --build dreamy-debian.d Dreamy-2023.04.04_armhf.deb
+fakeroot dpkg-deb -Zgzip --build dreamy-debian.d Dreamy-2023.04.20_armhf.deb
 make distclean
 rm -fr ./opt
 rm -fr dreamy-debian.d

@@ -175,8 +175,24 @@ class dreamy: public QMainWindow
 
   void slot_tick(void)
   {
-    QString seconds(m_options->show_seconds() ? ":ss" : "");
     auto now(QDateTime::currentDateTime());
+    auto s = now.toString("ss").toInt();
+
+    if(s >= 0 && s <= 2)
+      {
+	m_timer.setInterval(5000);
+	m_ui.date->setVisible(false);
+	m_ui.time->setVisible(false);
+	return;
+      }
+    else
+      {
+	m_timer.setInterval(1000);
+	m_ui.date->setVisible(m_options->show_date());
+	m_ui.time->setVisible(true);
+      }
+
+    QString seconds(m_options->show_seconds() ? ":ss" : "");
 
     if(m_options->show_am_pm())
       m_ui.time->setText(now.toString("h:mm" + seconds + " AP"));
