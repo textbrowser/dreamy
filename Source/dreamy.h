@@ -48,7 +48,11 @@ class dreamy: public QMainWindow
  public:
   dreamy(void):QMainWindow()
   {
+#ifdef Q_OS_ANDROID
+    m_options = new dreamy_options();
+#else
     m_options = new dreamy_options(this);
+#endif
     m_options->setModal(false);
     m_timer.start(1000);
     m_ui.setupUi(this);
@@ -100,6 +104,9 @@ class dreamy: public QMainWindow
 
   ~dreamy()
   {
+#ifdef Q_OS_ANDROID
+    m_options->deleteLater();
+#endif
   }
 
  private:
@@ -117,11 +124,11 @@ class dreamy: public QMainWindow
   void slot_options(void)
   {
 #ifdef Q_OS_ANDROID
-    m_options->resize(400, 600);
+    m_options->showMaximized();
 #else
     m_options->resize(sizeHint());
-#endif
     m_options->show();
+#endif
   }
 
   void slot_options_accepted(void)
