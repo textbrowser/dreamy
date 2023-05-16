@@ -194,9 +194,13 @@ class dreamy: public QMainWindow
       }
     else
       {
+	if(!m_ui.date->isVisible())
+	  m_ui.date->setVisible(m_options->show_date());
+
+	if(!m_ui.time->isVisible())
+	  m_ui.time->setVisible(true);
+
 	m_timer.setInterval(1000);
-	m_ui.date->setVisible(m_options->show_date());
-	m_ui.time->setVisible(true);
       }
 
     QString seconds(m_options->show_seconds() ? ":ss" : "");
@@ -208,7 +212,8 @@ class dreamy: public QMainWindow
 	((now.toString("h:mm" + seconds + " AP").
 	  mid(0, 5 + seconds.length())));
 
-    if(m_options->show_date())
+    if(m_options->show_date() &&
+       m_ui.date->text() != now.toString("yyyy-MM-dd"))
       m_ui.date->setText(now.toString("yyyy-MM-dd"));
   }
 };
