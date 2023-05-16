@@ -200,7 +200,8 @@ class dreamy: public QMainWindow
 	if(!m_ui.time->isVisible())
 	  m_ui.time->setVisible(true);
 
-	m_timer.setInterval(1000);
+	if(m_timer.interval() != 1000)
+	  m_timer.setInterval(1000);
       }
 
     QString seconds(m_options->show_seconds() ? ":ss" : "");
