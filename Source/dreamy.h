@@ -126,7 +126,7 @@ class dreamy: public QMainWindow
 #ifdef Q_OS_ANDROID
     m_options->showMaximized();
 #else
-    m_options->resize(sizeHint());
+    m_options->resize(minimumSize());
     m_options->show();
 #endif
   }
