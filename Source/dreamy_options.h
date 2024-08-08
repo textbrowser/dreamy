@@ -164,7 +164,7 @@ class dreamy_options: public QDialog
        toString().remove('&').trimmed().mid(0, 25));
 
     QFont font;
-    auto string(settings.value("font").toString().trimmed().mid(0, 100));
+    auto const string(settings.value("font").toString().trimmed().mid(0, 100));
 
     if(string.isEmpty() || !font.fromString(string))
       font = QApplication::font();
