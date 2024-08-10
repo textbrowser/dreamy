@@ -35,6 +35,7 @@ QMAKE_CXXFLAGS  += -Wall \
                    -Werror=format-security \
                    -Wextra \
                    -Wformat=2 \
+                   -Wold-style-cast \
                    -Woverloaded-virtual \
                    -Wpointer-arith \
                    -Wstack-protector \
