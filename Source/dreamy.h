@@ -189,8 +189,10 @@ class dreamy: public QMainWindow
       {
 	m_timer.setInterval(5000);
 	m_ui.date->setVisible(false);
+#ifndef Q_OS_ANDROID
 	m_ui.options->setVisible(false);
 	m_ui.quit->setVisible(false);
+#endif
 	m_ui.time->setVisible(false);
 	return;
       }
