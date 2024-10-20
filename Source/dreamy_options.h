@@ -76,6 +76,20 @@ class dreamy_options: public QDialog
 	    &QPushButton::clicked,
 	    this,
 	    &dreamy_options::slot_rotate);
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 7, 0))
+    connect(m_ui.show_am_pm,
+	    QOverload<Qt::CheckState>::of(&QCheckBox::checkStateChanged),
+	    this,
+	    &dreamy_options::slot_checkbox_clicked);
+    connect(m_ui.show_date,
+	    QOverload<Qt::CheckState>::of(&QCheckBox::checkStateChanged),
+	    this,
+	    &dreamy_options::slot_checkbox_clicked);
+    connect(m_ui.show_seconds,
+	    QOverload<Qt::CheckState>::of(&QCheckBox::checkStateChanged),
+	    this,
+	    &dreamy_options::slot_checkbox_clicked);
+#else
     connect(m_ui.show_am_pm,
 	    QOverload<int>::of(&QCheckBox::stateChanged),
 	    this,
@@ -88,6 +102,7 @@ class dreamy_options: public QDialog
 	    QOverload<int>::of(&QCheckBox::stateChanged),
 	    this,
 	    &dreamy_options::slot_checkbox_clicked);
+#endif
     restore_settings();
   }
 
@@ -212,7 +227,11 @@ class dreamy_options: public QDialog
   }
 
  private slots:
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 7, 0))
+  void slot_checkbox_clicked(Qt::CheckState state)
+#else
   void slot_checkbox_clicked(int state)
+#endif
   {
     Q_UNUSED(state);
     save_settings();
