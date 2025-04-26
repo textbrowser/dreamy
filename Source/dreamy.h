@@ -48,6 +48,8 @@ class dreamy: public QMainWindow
  public:
   dreamy(void):QMainWindow()
   {
+    m_cursor_timer.setSingleShot(true);
+    m_cursor_timer.start(5000);
 #ifdef Q_OS_ANDROID
     m_options = new dreamy_options();
 #else
@@ -57,6 +59,10 @@ class dreamy: public QMainWindow
     m_timer.start(1000);
     m_ui.setupUi(this);
     m_ui.date->setVisible(true);
+    connect(&m_cursor_timer,
+	    &QTimer::timeout,
+	    this,
+	    &dreamy::slot_hide_cursor);
     connect(&m_timer,
 	    &QTimer::timeout,
 	    this,
@@ -111,9 +117,23 @@ class dreamy: public QMainWindow
 
  private:
   QString m_colon;
+  QTimer m_cursor_timer;
   QTimer m_timer;
   Ui_dreamy m_ui;
   dreamy_options *m_options;
+
+  bool eventFilter(QObject *object, QEvent *event)
+  {
+    Q_UNUSED(object);
+
+    if(event && event->type() == QEvent::MouseMove)
+      {
+	m_cursor_timer.start();
+	setCursor(QCursor(Qt::ArrowCursor));
+      }
+
+    return false;
+  }
 
   void mouseDoubleClickEvent(QMouseEvent *event)
   {
@@ -122,11 +142,17 @@ class dreamy: public QMainWindow
   }
 
  private slots:
+  void slot_hide_cursor(void)
+  {
+    setCursor(QCursor(Qt::BlankCursor));
+  }
+
   void slot_options(void)
   {
 #ifdef Q_OS_ANDROID
     m_options->showMaximized();
 #else
+    m_options->resize(m_options->sizeHint());
     m_options->show();
 #endif
   }

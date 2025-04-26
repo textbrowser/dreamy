@@ -33,5 +33,6 @@ int main(int argc, char *argv[])
   dreamy d;
 
   d.showFullScreen();
+  qapplication.installEventFilter(&d);
   return qapplication.exec();
 }
