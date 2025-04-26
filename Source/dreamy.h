@@ -51,7 +51,7 @@ class dreamy: public QMainWindow
     m_cursor_timer.setSingleShot(true);
     m_cursor_timer.start(5000);
 #ifdef Q_OS_ANDROID
-    m_options = new dreamy_options();
+    m_options = new dreamy_options(nullptr);
 #else
     m_options = new dreamy_options(this);
 #endif
