@@ -41,14 +41,37 @@ class dreamy_options: public QDialog
   Q_OBJECT
 
  public:
+  static QString settings_filename(void)
+  {
+    QDir dir;
+
+    dir.mkdir(QDir::homePath() + QDir::separator() + ".dreamy");
+    return QDir::homePath() +
+      QDir::separator() +
+      ".dreamy" +
+      QDir::separator() +
+      "dreamy.ini";
+  }
+
   dreamy_options(QWidget *parent):QDialog(parent)
   {
     m_ui.setupUi(this);
-    m_ui.version->setText(tr("Dreamy version %1.").arg(DREAMY_VERSION));
+    m_ui.version->setText(tr("Dreamy Version %1").arg(DREAMY_VERSION));
     connect(m_ui.background_color,
 	    &QPushButton::clicked,
 	    this,
 	    &dreamy_options::slot_color_button_clicked);
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 7, 0))
+    connect(m_ui.blank_screen
+	    QOverload<Qt::CheckState>::of(&QCheckBox::checkStateChanged),
+	    this,
+	    &dreamy_options::slot_checkbox_clicked);
+#else
+    connect(m_ui.blank_screen,
+	    QOverload<int>::of(&QCheckBox::stateChanged),
+	    this,
+	    &dreamy_options::slot_checkbox_clicked);
+#endif    
 #ifdef Q_OS_ANDROID
     connect(m_ui.button_box->button(QDialogButtonBox::Close),
 	    &QPushButton::clicked,
@@ -153,18 +176,6 @@ class dreamy_options: public QDialog
  private:
   Ui_dreamy_options m_ui;
 
-  QString settings_filename(void) const
-  {
-    QDir dir;
-
-    dir.mkdir(QDir::homePath() + QDir::separator() + ".dreamy");
-    return QDir::homePath() +
-      QDir::separator() +
-      ".dreamy" +
-      QDir::separator() +
-      "dreamy.ini";
-  }
-
   void restore_settings(void)
   {
     QSettings settings(settings_filename(), QSettings::IniFormat);
@@ -177,6 +188,10 @@ class dreamy_options: public QDialog
     m_ui.background_color->setText
       (settings.value("background_color", m_ui.background_color->text()).
        toString().remove('&').trimmed().mid(0, 25));
+    m_ui.blank_screen->blockSignals(true);
+    m_ui.blank_screen->setChecked
+      (settings.value("blank_screen", true).toBool());
+    m_ui.blank_screen->blockSignals(false);
 
     QFont font;
     auto const string(settings.value("font").toString().trimmed().mid(0, 100));
@@ -218,6 +233,7 @@ class dreamy_options: public QDialog
     settings.setValue("angle", m_ui.angle->value());
     settings.setValue
       ("background_color", m_ui.background_color->text().remove('&'));
+    settings.setValue("blank_screen", m_ui.blank_screen->isChecked());
     settings.setValue("font", m_ui.font->text().remove('&'));
     settings.setValue("font_color", m_ui.font_color->text().remove('&'));
     settings.setValue("font_size", m_ui.font_size->value());

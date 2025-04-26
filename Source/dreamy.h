@@ -110,6 +110,7 @@ class dreamy: public QMainWindow
   }
 
  private:
+  QString m_colon;
   QTimer m_timer;
   Ui_dreamy m_ui;
   dreamy_options *m_options;
@@ -126,7 +127,6 @@ class dreamy: public QMainWindow
 #ifdef Q_OS_ANDROID
     m_options->showMaximized();
 #else
-    m_options->resize(minimumSize());
     m_options->show();
 #endif
   }
@@ -182,10 +182,12 @@ class dreamy: public QMainWindow
 
   void slot_tick(void)
   {
+    QSettings settings
+      (dreamy_options::settings_filename(), QSettings::IniFormat);
     auto const now(QDateTime::currentDateTime());
     auto const s = now.toString("ss").toInt();
 
-    if(s >= 0 && s <= 2)
+    if(settings.value("blank_screen", true).toBool() && s >= 0 && s <= 2)
       {
 	m_timer.setInterval(5000);
 	m_ui.date->setVisible(false);
@@ -211,13 +213,18 @@ class dreamy: public QMainWindow
 	m_ui.quit->setVisible(true);
       }
 
-    QString const seconds(m_options->show_seconds() ? ":ss" : "");
+    if(m_colon == " ")
+      m_colon = ":";
+    else
+      m_colon = " ";
+
+    QString const seconds(m_options->show_seconds() ? m_colon + "ss" : "");
 
     if(m_options->show_am_pm())
-      m_ui.time->setText(now.toString("h:mm" + seconds + " AP"));
+      m_ui.time->setText(now.toString("h" + m_colon + "mm" + seconds + " AP"));
     else
       m_ui.time->setText
-	((now.toString("h:mm" + seconds + " AP").
+	((now.toString("h" + m_colon + "mm" + seconds + " AP").
 	  mid(0, 5 + seconds.length())));
 
     if(m_options->show_date() &&

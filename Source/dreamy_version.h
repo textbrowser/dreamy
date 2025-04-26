@@ -27,7 +27,5 @@
 
 #ifndef _dreamy_version_h_
 #define _dreamy_version_h_
-
-#define DREAMY_VERSION "2024.08.15"
-
+#define DREAMY_VERSION "2025.04.26"
 #endif
