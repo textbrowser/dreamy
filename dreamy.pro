@@ -12,7 +12,6 @@ android {
 QMAKE_CXXFLAGS  += -Wall \
                    -Wcast-align \
                    -Wcast-qual \
-                   -Wdouble-promotion \
                    -Werror \
                    -Werror=format-security \
                    -Wextra \
@@ -81,20 +80,10 @@ DISTFILES += android/AndroidManifest.xml \
              android/gradle/wrapper/gradle-wrapper.properties \
              android/gradlew \
              android/gradlew.bat \
-             android/res/values/libs.xml
+             android/res/values/libs.xml \
+             android/res/xml/qtprovider_paths.xml
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 }
 }
-
-DISTFILES += \
-    android/AndroidManifest.xml \
-    android/build.gradle \
-    android/gradle.properties \
-    android/gradle/wrapper/gradle-wrapper.jar \
-    android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew \
-    android/gradlew.bat \
-    android/res/values/libs.xml \
-    android/res/xml/qtprovider_paths.xml
