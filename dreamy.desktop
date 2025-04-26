@@ -1,0 +1,10 @@
+[Desktop Entry]
+Categories=Utility
+Comment=Dreamy
+Exec=/opt/dreamy/Dreamy
+GenericName=Dreamy
+Icon=/opt/dreamy/dreamy.png
+Name=Dreamy
+StartupNotify=true
+Terminal=false
+Type=Application

@@ -18,6 +18,7 @@ make distclean 2>/dev/null
 mkdir -p ./opt/dreamy
 qmake -o Makefile dreamy.pro && make -j $(nproc)
 cp -p ./Dreamy ./opt/dreamy/.
+cp -p ./dreamy.desktop ./opt/dreamy/.
 mkdir -p dreamy-debian.d/opt
 cp -pr DEBIAN dreamy-debian.d/.
 cp -r ./opt/dreamy dreamy-debian.d/opt/.
