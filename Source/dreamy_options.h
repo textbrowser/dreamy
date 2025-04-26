@@ -194,9 +194,9 @@ class dreamy_options: public QDialog
     m_ui.blank_screen->blockSignals(false);
 
     QFont font;
-    auto const string(settings.value("font").toString().trimmed().mid(0, 100));
+    auto const string(settings.value("font").toString().mid(0, 250));
 
-    if(string.isEmpty() || !font.fromString(string))
+    if(string.trimmed().isEmpty() || !font.fromString(string))
       font = QApplication::font();
 
     font.setPointSize
