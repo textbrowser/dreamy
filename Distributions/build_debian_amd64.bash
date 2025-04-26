@@ -14,9 +14,22 @@ then
     exit 1
 fi
 
+qmake=$(which qmake)
+
+if [ -z "$qmake" ]
+then
+    qmake=$(which qmake6)
+fi
+
+if [ -z "$qmake" ]
+then
+    echo "Please install Qt."
+    exit 1
+fi
+
 make distclean 2>/dev/null
 mkdir -p ./opt/dreamy
-qmake -o Makefile dreamy.pro && make -j $(nproc)
+$qmake -o Makefile dreamy.pro && make -j $(nproc) 2>/dev/null
 cp -p ./Dreamy ./opt/dreamy/.
 cp -p ./dreamy.desktop ./opt/dreamy/.
 mkdir -p dreamy-debian.d/opt

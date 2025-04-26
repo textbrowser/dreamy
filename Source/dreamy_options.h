@@ -71,7 +71,7 @@ class dreamy_options: public QDialog
 	    QOverload<int>::of(&QCheckBox::stateChanged),
 	    this,
 	    &dreamy_options::slot_checkbox_clicked);
-#endif    
+#endif
 #ifdef Q_OS_ANDROID
     connect(m_ui.button_box->button(QDialogButtonBox::Close),
 	    &QPushButton::clicked,
