@@ -62,7 +62,7 @@ class dreamy_options: public QDialog
 	    this,
 	    &dreamy_options::slot_color_button_clicked);
 #if (QT_VERSION >= QT_VERSION_CHECK(6, 7, 0))
-    connect(m_ui.blank_screen
+    connect(m_ui.blank_screen,
 	    QOverload<Qt::CheckState>::of(&QCheckBox::checkStateChanged),
 	    this,
 	    &dreamy_options::slot_checkbox_clicked);
