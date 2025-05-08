@@ -50,7 +50,7 @@
       <item>
        <layout class="QVBoxLayout" name="clock_layout">
         <property name="spacing">
-         <number>10</number>
+         <number>15</number>
         </property>
         <item>
          <widget class="dreamy_label" name="time">
