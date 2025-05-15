@@ -35,7 +35,7 @@ cp -p ./dreamy.desktop ./opt/dreamy/.
 mkdir -p dreamy-debian.d/opt
 cp -pr DEBIAN dreamy-debian.d/.
 cp -r ./opt/dreamy dreamy-debian.d/opt/.
-fakeroot dpkg-deb -Zgzip --build dreamy-debian.d Dreamy-2025.04.26_amd64.deb
+fakeroot dpkg-deb -Zgzip --build dreamy-debian.d Dreamy-2025.05.14_amd64.deb
 make distclean
 rm -fr ./opt
 rm -fr dreamy-debian.d

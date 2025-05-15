@@ -51,7 +51,7 @@ fi
 
 cp -r ./opt/dreamy dreamy-debian.d/opt/.
 fakeroot dpkg-deb \
-	 --build dreamy-debian.d Dreamy-2025.04.26_$architecture.deb
+	 --build dreamy-debian.d Dreamy-2025.05.14_$architecture.deb
 make distclean
 rm -fr ./opt
 rm -fr dreamy-debian.d

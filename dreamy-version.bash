@@ -17,6 +17,13 @@ do
     sed -i "s/Version: .*/Version: $VERSION/" $FILE
 done
 
+for file in Distributions/build*
+do
+    sed -i \
+    "s/Dreamy-[[:digit:]]\+\.[[:digit:]]\+\.[[:digit:]]\+/Dreamy-$VERSION/" \
+    $file
+done
+
 # Version configuration.
 
 FILE="Source/dreamy_version.h"
